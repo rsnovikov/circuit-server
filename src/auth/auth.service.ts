@@ -48,6 +48,9 @@ export class AuthService {
 
   async validateUser(createUserDto: CreateUserDto) {
     const user = await this.userService.getByEmail(createUserDto.email);
+    if (!user) {
+      throw new UnauthorizedException('Пользователь не найден');
+    }
     const isPasswordEqual = await bcrypt.compare(
       createUserDto.password,
       user.password,
