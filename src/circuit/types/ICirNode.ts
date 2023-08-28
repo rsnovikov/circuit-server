@@ -3,7 +3,7 @@ interface INodeRelatedElement {
   terminalId: string;
 }
 
-export interface IBreadboardNode {
+export interface ICirNode {
   id: string;
   x: number;
   y: number;

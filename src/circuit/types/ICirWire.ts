@@ -1,4 +1,4 @@
-export interface IBreadboardWire {
+export interface ICirWire {
   id: string;
   startNodeId: string;
   endNodeId: string | null;

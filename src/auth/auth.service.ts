@@ -18,7 +18,7 @@ export class AuthService {
 
   async registration(createUserDto: CreateUserDto) {
     const candidate = await this.userService.getByEmail(createUserDto.email);
-    console.log(candidate);
+
     if (candidate) {
       throw new ConflictException('Пользователь с таким email уже существует');
     }
@@ -29,12 +29,20 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    return this.generateAccessToken(user);
+    return {
+      ...this.generateAccessToken(user),
+      userId: user.id,
+      email: user.email,
+    };
   }
 
   async login(createUserDto: CreateUserDto) {
     const user = await this.validateUser(createUserDto);
-    return this.generateAccessToken(user);
+    return {
+      ...this.generateAccessToken(user),
+      userId: user.id,
+      email: user.email,
+    };
   }
 
   private generateAccessToken(

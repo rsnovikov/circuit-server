@@ -1,13 +1,13 @@
-interface IBreadboardElementPhysData {
+interface ICirElementPhysData {
   [key: string]: { value: string };
 }
 
-export interface IBreadboardElement {
+export interface ICirElement {
   id: string;
   x: number;
   y: number;
   rotate: number;
   personalName: string;
-  physData: IBreadboardElementPhysData;
+  physData: ICirElementPhysData;
   type: string;
 }

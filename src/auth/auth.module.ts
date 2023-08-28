@@ -9,9 +9,11 @@ import { JwtStrategy } from './jwt.strategy';
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
   imports: [
-    JwtModule.register({
-      secret: 'private key',
-      signOptions: { expiresIn: '30m' },
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.AUTH_SECRET_KEY,
+        signOptions: { expiresIn: '24h' },
+      }),
     }),
     forwardRef(() => UserModule),
   ],
