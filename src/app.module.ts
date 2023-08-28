@@ -21,4 +21,3 @@ import { UserModule } from './user/user.module';
   providers: [],
 })
 export class AppModule {}
-console.log(process.env.AUTH_SECRET_KEY);
