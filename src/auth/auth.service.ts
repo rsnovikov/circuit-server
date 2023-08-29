@@ -1,8 +1,4 @@
-import {
-  ConflictException,
-  Injectable,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcryptjs';
 import { Types } from 'mongoose';
@@ -20,7 +16,9 @@ export class AuthService {
     const candidate = await this.userService.getByEmail(createUserDto.email);
 
     if (candidate) {
-      throw new ConflictException('Пользователь с таким email уже существует');
+      throw new BadRequestException(
+        'Пользователь с таким email уже существует',
+      );
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 5);
@@ -57,7 +55,7 @@ export class AuthService {
   async validateUser(createUserDto: CreateUserDto) {
     const user = await this.userService.getByEmail(createUserDto.email);
     if (!user) {
-      throw new UnauthorizedException('Пользователь не найден');
+      throw new BadRequestException('Пользователь не найден');
     }
     const isPasswordEqual = await bcrypt.compare(
       createUserDto.password,
@@ -66,6 +64,6 @@ export class AuthService {
     if (user && isPasswordEqual) {
       return user;
     }
-    throw new UnauthorizedException('Неверный пароль');
+    throw new BadRequestException('Неверный пароль');
   }
 }
